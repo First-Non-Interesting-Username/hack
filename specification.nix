@@ -18,6 +18,8 @@ in {
         # Don't use this model
         "model" = "openai/gpt-3.5-turbo-0613";
         "base-url" = "https://openrouter.ai/api/v1";
+        # I plan to implement plugin system for web search/MCP
+        "plugins" = [ ];
       };
     };
     cli = {
@@ -33,10 +35,10 @@ in {
       modes = {
         command = {
           description = ''
-              Outputs command, to be piped in shell
-              eg. `hack -x -p "Give me a command doing the same as ls -la, but for eza" | bash -c`
-              This example is pointless, but I think it ilustrates the intent well enough
-            '';
+            Outputs command, to be piped in shell
+            eg. `hack -x -p "Give me a command doing the same as ls -la, but for eza" | bash -c`
+            This example is pointless, but I think it ilustrates the intent well enough
+          '';
           prompt = "TBD";
         };
         normal = {
