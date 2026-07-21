@@ -5,10 +5,11 @@ import (
 	"golang.org/x/term"
 	"io"
 	"os"
+	"strings"
 )
 
 func generatePrompt() (string, error) {
-	stdin, interactive, err := readPrompt()
+	stdin, err := readPrompt()
 	if err != nil {
 		return "", err
 	}
@@ -25,13 +26,7 @@ func generatePrompt() (string, error) {
 	return promptText, nil
 }
 
-func readPrompt() (string, bool, error) {
-
-	stat, err := os.Stdin.Stat()
-	if err != nil {
-		return "", false, fmt.Errorf("checking stdin: %w", err)
-	}
-
+func readPrompt() (string, error) {
 	isTerminal := term.IsTerminal(int(os.Stdin.Fd()))
 
 	if isTerminal {
@@ -40,10 +35,9 @@ func readPrompt() (string, bool, error) {
 
 	data, err := io.ReadAll(os.Stdin)
 	if err != nil {
-		return "", false, fmt.Errorf("reading stdin: %w", err)
+		return "", fmt.Errorf("reading stdin: %w", err)
 	}
-	data = strings.TrimSpace(data)
-	return string(data), isTerminal, nil
+	return strings.TrimSpace(string(data)), nil
 }
 
 func generateSystemPrompt() (string, error) {

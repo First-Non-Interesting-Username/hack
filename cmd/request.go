@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
 )
 
 func makeRequest() (string, error) {
@@ -48,15 +47,14 @@ func makeRequest() (string, error) {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-    	return nil, fmt.Errorf("unexpected status %d: %s", resp.StatusCode, respBody)
-	}
-
-
 	respBody, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", fmt.Errorf("read error: %w", err)
 	}
 
-	return respBody, nil
+	if resp.StatusCode != http.StatusOK {
+    	return "", fmt.Errorf("unexpected status %d: %s", resp.StatusCode, respBody)
+	}
+
+	return string(respBody), nil
 }

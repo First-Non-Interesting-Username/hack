@@ -2,9 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"os"
+	"path/filepath"
+	"errors"
 )
 
 var (
@@ -27,11 +28,7 @@ func init() {
 	viper.BindPFlag("base_url", rootCmd.Flags().Lookup("base"))
 }
 
-func createConfig(cmd *cobra.Command) error {
-	cfgPath, err := cmd.Flags().GetString("config")
-	if err != nil {
-		return err
-	}
+func createConfig(cfgPath string) error {
 	if cfgPath != "" {
 		viper.SetConfigFile(cfgPath)
 	} else {
@@ -47,7 +44,6 @@ func createConfig(cmd *cobra.Command) error {
 	if err := viper.ReadInConfig(); err != nil {
 		var notFound viper.ConfigFileNotFoundError
 		if errors.As(err, &notFound) {
-
 			return nil
 		}
 		return fmt.Errorf("reading config: %w", err)

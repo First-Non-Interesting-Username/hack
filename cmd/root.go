@@ -3,6 +3,7 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 	"os"
+	"fmt"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -17,16 +18,18 @@ var rootCmd = &cobra.Command{
 	TBD
 	`,
 	PreRunE: func(cmd *cobra.Command, args []string) error {
-		err := verifyflags()
-		if err != nil {
-			return err
+		cfgPath, _ := cmd.Flags().GetString("config")
+		if err := createConfig(cfgPath); err != nil {
+    		return err
 		}
+		return nil
 	},
-	RunE: func(cmd *cobra.Command, args []string) {
-		err = runHack()
+	RunE: func(cmd *cobra.Command, args []string) error {
+		err := runHack()
 		if err != nil {
 			return err
 		}
+		return nil
 	},
 }
 
@@ -40,8 +43,10 @@ func Execute() {
 }
 
 func runHack() error {
-	err = createConfig()
+	response, err := makeRequest()
 	if err != nil {
 		return err
 	}
+	fmt.Println(response)
+	return nil
 }
