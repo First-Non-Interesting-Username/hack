@@ -10,6 +10,8 @@ import (
 var (
 	commandMode bool
 	codeMode    bool
+	Prompt      string
+	showVersion bool
 )
 
 func init() {
@@ -46,21 +48,22 @@ func createConfig(cmd *cobra.Command) error {
 }
 
 func determineMode() (string, error) {
-    if commandMode && codeMode {
-        return "", fmt.Errorf("cannot use command mode and code mode simultaneously")
-    }
+	if commandMode && codeMode {
+		return "", fmt.Errorf("cannot use command mode and code mode simultaneously")
+	}
 
-    switch {
-    case commandMode:
-        return "command", nil
-    case codeMode:
-        return "code", nil
-    default:
-        return "normal", nil
-    }
+	switch {
+	case commandMode:
+		return "command", nil
+	case codeMode:
+		return "code", nil
+	default:
+		return "normal", nil
+	}
 }
 
-
-func verifyflags() {
-
+func verifyflags(cmd *cobra.Command) error {
+	if Prompt == "" && showVersion == false && cmd.Flags().GetBool("help") == false {
+		return fmt.Errorf("no prompt was provided")
+	}
 }
