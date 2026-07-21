@@ -16,7 +16,10 @@ var rootCmd = &cobra.Command{
 
 	TBD
 	`,
-	Run: func(cmd *cobra.Command, args []string) {
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		verifyflags()
+	},
+	RunE: func(cmd *cobra.Command, args []string) {
 		runHack()
 	},
 }
