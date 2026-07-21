@@ -1,15 +1,15 @@
 package cmd
 
 import (
-	"os"
-
 	"github.com/spf13/cobra"
+	"os"
 )
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "hack",
-	Short: "CLI tool for interacting with LLMs",
+	Version: "1",
+	Use:     "hack",
+	Short:   "CLI tool for interacting with LLMs",
 	Long: `hack is a CLI tool for programmatically interacting with Open AI compatible APIs, with main focus on Hack Club AI.
 
 	It features 3 modes: normal, command and code.
@@ -23,7 +23,10 @@ var rootCmd = &cobra.Command{
 		}
 	},
 	RunE: func(cmd *cobra.Command, args []string) {
-		runHack()
+		err = runHack()
+		if err != nil {
+			return err
+		}
 	},
 }
 
@@ -36,6 +39,9 @@ func Execute() {
 	}
 }
 
-func runHack() {
-
+func runHack() error {
+	err = createConfig()
+	if err != nil {
+		return err
+	}
 }

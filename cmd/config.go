@@ -10,19 +10,17 @@ import (
 var (
 	commandMode bool
 	codeMode    bool
-	Prompt      string
-	showVersion bool
+	prompt      string
 )
 
 func init() {
-	rootCmd.Flags().StringVarP(&Prompt, "prompt", "p", "", "prompt for the LLM")
+	rootCmd.Flags().StringVarP(&prompt, "prompt", "p", "", "prompt for the LLM")
 	rootCmd.Flags().StringP("config", "c", "", "config file path, $HOME/.config/hack-ai/config.toml if not provided")
 	rootCmd.Flags().StringP("key", "k", "", "API key for selected provider")
 	rootCmd.Flags().StringP("model", "m", "", "LLM used for response")
 	rootCmd.Flags().StringP("base", "b", "", "base URL for the API (without /chat/completions)")
 	rootCmd.Flags().BoolVarP(&commandMode, "shell", "s", false, "enable command mode")
 	rootCmd.Flags().BoolVarP(&codeMode, "write", "w", false, "enable code mode")
-	rootCmd.Flags().BoolVarP(&showVersion, "version", "v", false, "display informations about version")
 
 	viper.BindPFlag("api_key", rootCmd.Flags().Lookup("key"))
 	viper.BindPFlag("model", rootCmd.Flags().Lookup("model"))
@@ -45,6 +43,16 @@ func createConfig(cmd *cobra.Command) error {
 		viper.SetConfigName("config")
 		viper.SetConfigType("toml")
 	}
+
+	if err := viper.ReadInConfig(); err != nil {
+		var notFound viper.ConfigFileNotFoundError
+		if errors.As(err, &notFound) {
+
+			return nil
+		}
+		return fmt.Errorf("reading config: %w", err)
+	}
+	return nil
 }
 
 func determineMode() (string, error) {
@@ -59,11 +67,5 @@ func determineMode() (string, error) {
 		return "code", nil
 	default:
 		return "normal", nil
-	}
-}
-
-func verifyflags(cmd *cobra.Command) error {
-	if Prompt == "" && showVersion == false && cmd.Flags().GetBool("help") == false {
-		return fmt.Errorf("no prompt was provided")
 	}
 }
