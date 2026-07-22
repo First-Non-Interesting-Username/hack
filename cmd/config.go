@@ -42,7 +42,6 @@ func createConfig(cfgPath string) error {
 	return nil
 }
 
-
 func init() {
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "",
 		"config file path, $HOME/.config/hack-ai/config.toml if not provided")

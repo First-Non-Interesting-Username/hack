@@ -1,11 +1,11 @@
 package cmd
 
 import (
-	"github.com/spf13/viper"
-	"io"
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/spf13/viper"
+	"io"
 	"net/http"
 	"os"
 )
@@ -22,7 +22,7 @@ func makeRequest() (string, error) {
 	}
 
 	body := map[string]any{
-		"model":    viper.GetString("model"),
+		"model": viper.GetString("model"),
 		"messages": []map[string]string{
 			{"role": "system", "content": systemPrompt},
 			{"role": "user", "content": prompt},
@@ -34,7 +34,7 @@ func makeRequest() (string, error) {
 		return "", fmt.Errorf("marshal error: %w", err)
 	}
 
-	req, err := http.NewRequest("POST", viper.GetString("base_url") + "/chat/completions", bytes.NewReader(jsonBody))
+	req, err := http.NewRequest("POST", viper.GetString("base_url")+"/chat/completions", bytes.NewReader(jsonBody))
 	if err != nil {
 		return "", fmt.Errorf("request error: %w", err)
 	}
@@ -49,7 +49,7 @@ func makeRequest() (string, error) {
 		apiKey = string(bytes.TrimSpace(data))
 	}
 
-	req.Header.Set("Authorization", "Bearer " + apiKey)
+	req.Header.Set("Authorization", "Bearer "+apiKey)
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
@@ -63,7 +63,7 @@ func makeRequest() (string, error) {
 	}
 
 	if resp.StatusCode != http.StatusOK {
-    	return "", fmt.Errorf("unexpected status %d: %s", resp.StatusCode, respBody)
+		return "", fmt.Errorf("unexpected status %d: %s", resp.StatusCode, respBody)
 	}
 
 	return string(respBody), nil

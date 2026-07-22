@@ -4,7 +4,6 @@
   fetchFromGitHub,
   nix-update-script,
 }:
-
 buildGoModule (finalAttrs: {
   pname = "hack";
   version = "0-unstable-2026-07-22";
@@ -19,9 +18,9 @@ buildGoModule (finalAttrs: {
 
   vendorHash = "sha256-lo1Dz5isHCfX+mQ0zoF0jCXwnT7WXBfzwgC9UJBvtQg=";
 
-  ldflags = [ "-s" ];
+  ldflags = ["-s"];
 
-  passthru.updateScript = nix-update-script { };
+  passthru.updateScript = nix-update-script {};
 
   meta = {
     description = "CLI tool for interacting with LLMs";

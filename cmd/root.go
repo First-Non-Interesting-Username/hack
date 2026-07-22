@@ -1,9 +1,9 @@
 package cmd
 
 import (
+	"fmt"
 	"github.com/spf13/cobra"
 	"os"
-	"fmt"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -31,7 +31,7 @@ var rootCmd = &cobra.Command{
 	PreRunE: func(cmd *cobra.Command, args []string) error {
 		cfgPath, _ := cmd.Flags().GetString("config")
 		if err := createConfig(cfgPath); err != nil {
-    		return err
+			return err
 		}
 		return nil
 	},

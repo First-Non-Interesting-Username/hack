@@ -1,11 +1,12 @@
-self:
-
-{ config, lib, pkgs, ... }:
-
-let
+self: {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (pkgs.stdenv.hostPlatform) system;
-in
-{
+  tomlFormat = pkgs.formats.toml { };
+in {
   options.programs.hack = {
     enable = lib.mkEnableOption "hack, CLI tool for interacting with LLMs";
 
@@ -16,25 +17,39 @@ in
       defaultText = lib.literalExpression "self.packages.\${pkgs.stdenv.hostPlatform.system}.hack";
       description = "The hack package to install.";
     };
-    settings = {
-      model = lib.mkOption {
-        type = lib.types.string or null;
-        default = null;
-        example = "anthropic/claude-fable-5";
-        description = "Model to be used if no overwrite was provided";
+    settings = lib.mkOption {
+      type = lib.types.submodule {
+        freeformType = tomlFormat.type;
+
+        options = {
+          model = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            example = "anthropic/claude-fable-5";
+            description = "Model to be used if no overwrite was provided";
+          };
+
+          base_url = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            example = "https://ai.hackclub.com/proxy/v1";
+            description = "API base to be used if no overwrite was provided";
+          };
+
+          api_key_path = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            example = "\${config.sops.secrets.HACK_CLUB_AI_API_KEY.path}";
+            description = ''
+              Runtime path to a file containing the API key, e.g. a sops
+              secret. Str, not path, so it is not resolved to the Nix store.
+            '';
+          };
+        };
       };
-      base_url = {
-        type = lib.types.string or null;
-        default = null;
-        example = "https://ai.hackclub.com/proxy/v1";
-        description = "API base to be used if no overwrite was provided";
-      };
-      api_key_path = {
-        type = lib.types.path or null;
-        default = null;
-        example = "\${config.sops.secrets.HACK_CLUB_AI_API_KEY.path}";
-        description = "Path to file containing the API key";
-      };
+
+      default = {};
+      description = "Configuration written to {file}`config.toml`.";
     };
   };
 }
