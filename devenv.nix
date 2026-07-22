@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   languages.go.enable = true;
 
-  packages = [ pkgs.cobra-cli ];
+  packages = [pkgs.cobra-cli];
 }

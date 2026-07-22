@@ -6,13 +6,20 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = inputs@{ flake-parts, ... }:
+  outputs = inputs@{ flake-parts, self, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-      ];
       systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
-      perSystem = { config, self', inputs', pkgs, system, ... }: {
-        packages.hack = pkgs.callPackage ./default.nix {};
+
+      perSystem = { self', pkgs, ... }: {
+        packages = {
+          hack = pkgs.callPackage ./nix/package.nix { };
+          default = self'.packages.hack;
+        };
+      };
+
+      flake = {
+        nixosModules.default = import ./nix/nixos.nix self;
+        homeManagerModules.default = import ./nix/home-manager.nix self;
       };
     };
 }

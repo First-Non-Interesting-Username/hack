@@ -8,7 +8,7 @@
 buildGoModule (finalAttrs: {
   pname = "hack";
   version = "0-unstable-2026-07-22";
-  __structuredAttrs = true;
+  structuredAttrs = true;
 
   src = fetchFromGitHub {
     owner = "First-Non-Interesting-Username";
@@ -24,7 +24,7 @@ buildGoModule (finalAttrs: {
   passthru.updateScript = nix-update-script { };
 
   meta = {
-    description = "";
+    description = "CLI tool for interacting with LLMs";
     homepage = "https://github.com/First-Non-Interesting-Username/hack";
     license = lib.licenses.gpl3Only;
     # maintainers = with lib.maintainers; [ ];

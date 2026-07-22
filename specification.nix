@@ -19,7 +19,7 @@ in {
         "model" = "openai/gpt-3.5-turbo-0613";
         "base-url" = "https://openrouter.ai/api/v1";
         # I plan to implement plugin system for web search/MCP
-        "plugins" = [ ];
+        "plugins" = [];
       };
     };
     cli = {
