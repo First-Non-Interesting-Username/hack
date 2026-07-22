@@ -12,21 +12,21 @@ var rootCmd = &cobra.Command{
 	Use:     "hack",
 	Short:   "CLI tool for interacting with LLMs",
 	Long: `
-			hack is a command-line tool for AI-assisted development.
+hack is a command-line tool for AI-assisted development.
 
-			It sends prompts to OpenAI-compatible LLM APIs and returns output tailored
-			to the task at hand: shell commands, executable code, documentation, or
-			plain responses.
+It sends prompts to OpenAI-compatible LLM APIs and returns output tailored
+to the task at hand: shell commands, executable code, documentation, or
+plain responses.
 
-			Usage:
-				hack -p "your prompt here"
-				echo "some content" | hack -p "summarize this"
-				ls -la | hack -x "delete the largest file"
+Usage:
+	hack -p "your prompt here"
+	echo "some content" | hack -p "summarize this"
+	ls -la | hack -x "delete the largest file"
 
-			Modes:
-				shell	(-x/--execute)	Generate shell commands from a prompt
-				code	(-w/--write)  	Output executable code (jq, python3, bash, or POSIX sh)
-				normal    				Standard prompt-and-response
+Modes:
+	shell	(-x/--execute)	Generate shell commands from a prompt
+	code	(-w/--write)  	Output executable code (jq, python3, bash, or POSIX sh)
+	normal					Standard prompt-and-response
 	`,
 	PreRunE: func(cmd *cobra.Command, args []string) error {
 		cfgPath, _ := cmd.Flags().GetString("config")

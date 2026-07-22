@@ -10,7 +10,12 @@ import (
 	"github.com/spf13/viper"
 )
 
-var cfgFile string
+var (
+	cfgFile string
+	prompt string
+	commandMode bool
+	codeMode bool
+)
 
 func createConfig(cfgPath string) error {
 	if cfgPath != "" {
@@ -61,5 +66,20 @@ func init() {
 
 	rootCmd.PersistentPreRunE = func(cmd *cobra.Command, args []string) error {
 		return createConfig(cfgFile)
+	}
+}
+
+func determineMode() (string, error) {
+	if commandMode && codeMode {
+		return "", fmt.Errorf("cannot use command mode and code mode simultaneously")
+	}
+
+	switch {
+	case commandMode:
+		return "command", nil
+	case codeMode:
+		return "code", nil
+	default:
+		return "normal", nil
 	}
 }
