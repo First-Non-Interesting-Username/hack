@@ -1,4 +1,4 @@
-module hack-ai-cli
+module github.com/First-Non-Interesting-Username/hack
 
 go 1.26.4
 

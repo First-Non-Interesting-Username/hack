@@ -1,6 +1,6 @@
 package main
 
-import "hack-ai-cli/cmd"
+import "github.com/First-Non-Interesting-Username/hack/cmd"
 
 func main() {
 	cmd.Execute()
