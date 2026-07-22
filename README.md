@@ -2,6 +2,8 @@
 
 Dead-simple, UNIX style tool for interacting with LLMs on command line.
 
+It is intended for hackclub AI API, but there's nothing stopping you from using it with any other Open AI completions compatible API.
+
 ![Hackatime Badge](https://hackatime-badge.hackclub.com/@janekmusin/hack-ai-cli)
 
 ## Installation and usage
@@ -53,13 +55,17 @@ programs.hack = {
 Create a file named `config.toml` either in `$XDG_CONFIG_HOME/hack` or `/etc/hack`.
 The user dir takes precedence over system dir.
 
-File contents:
+File contents (example values):
 
 ```toml
-base_url = # Base URL (without /chat/completions)
-model = # Full name of the model in your provider
-api_key = # Your API key
-api_key_path = # Path to a file containing your API key. It must be readable by the user you will be running hack with
+# Base URL (without /chat/completions)
+base_url = "https://ai.hackclub.com/proxy/v1"
+# Full name of the model in your provider
+model = "deepseek/deepseek-v4-pro"
+# Your API key
+api_key = "sk-xxx"
+# Path to a file containing your API key. It must be readable by the user you will be running hack with
+api_key_path = "/run/secrets/HACKCLUB_AI_API_KEY"
 ```
 
 ### Usage
@@ -76,12 +82,12 @@ plain responses.
 Usage:
         hack -p "your prompt here"
         echo "some content" | hack -p "summarize this"
-        ls -la | hack -x "delete the largest file"
+        ls -la | hack -xp "delete the largest file"
 
 Modes:
         shell   (-x/--execute)  Generate shell commands from a prompt
         code    (-w/--write)    Output executable code (jq, python3, bash, or POSIX sh)
-        normal                                  Standard prompt-and-response
+        normal                  Standard prompt-and-response
 
 Usage:
   hack [flags]
@@ -91,7 +97,7 @@ Flags:
   -c, --config string     config file path, $HOME/.config/hack-ai/config.toml if not provided
   -h, --help              help for hack
   -k, --key string        API key for selected provider
-      --key-file string   Path to file containing API key
+  -f  --key-file string   Path to file containing API key
   -m, --model string      LLM used for response
   -p, --prompt string     prompt for the LLM
   -s, --shell             enable command mode

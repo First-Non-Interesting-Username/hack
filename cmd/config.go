@@ -53,7 +53,7 @@ func init() {
 
 	rootCmd.Flags().StringVarP(&prompt, "prompt", "p", "", "prompt for the LLM")
 	rootCmd.Flags().StringP("key", "k", "", "API key for selected provider")
-	rootCmd.Flags().StringP("key-file", "", "", "Path to file containing API key")
+	rootCmd.Flags().StringP("key-file", "f", "", "Path to file containing API key")
 	rootCmd.Flags().StringP("model", "m", "", "LLM used for response")
 	rootCmd.Flags().StringP("base", "b", "", "base URL for the API (without /chat/completions)")
 	rootCmd.Flags().BoolVarP(&commandMode, "shell", "s", false, "enable command mode")
