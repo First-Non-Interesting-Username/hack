@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 )
 
 func makeRequest() (string, error) {
@@ -39,7 +40,16 @@ func makeRequest() (string, error) {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer " + viper.GetString("api_key"))
+	apiKey := viper.GetString("api_key")
+	if path := viper.GetString("api_key_path"); path != "" {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return "", fmt.Errorf("reading api key file: %w", err)
+		}
+		apiKey = string(bytes.TrimSpace(data))
+	}
+
+	req.Header.Set("Authorization", "Bearer " + apiKey)
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {

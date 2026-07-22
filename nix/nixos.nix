@@ -1,4 +1,3 @@
-# NixOS module: programs.hack.enable installs hack system-wide.
 self:
 
 { config, lib, ... }:

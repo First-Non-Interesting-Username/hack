@@ -1,44 +1,35 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
-	"github.com/spf13/viper"
 	"os"
 	"path/filepath"
-	"errors"
+
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
-var (
-	commandMode bool
-	codeMode    bool
-	prompt      string
-)
-
-func init() {
-	rootCmd.Flags().StringVarP(&prompt, "prompt", "p", "", "prompt for the LLM")
-	rootCmd.Flags().StringP("config", "c", "", "config file path, $HOME/.config/hack-ai/config.toml if not provided")
-	rootCmd.Flags().StringP("key", "k", "", "API key for selected provider")
-	rootCmd.Flags().StringP("model", "m", "", "LLM used for response")
-	rootCmd.Flags().StringP("base", "b", "", "base URL for the API (without /chat/completions)")
-	rootCmd.Flags().BoolVarP(&commandMode, "shell", "s", false, "enable command mode")
-	rootCmd.Flags().BoolVarP(&codeMode, "write", "w", false, "enable code mode")
-
-	viper.BindPFlag("api_key", rootCmd.Flags().Lookup("key"))
-	viper.BindPFlag("model", rootCmd.Flags().Lookup("model"))
-	viper.BindPFlag("base_url", rootCmd.Flags().Lookup("base"))
-}
+var cfgFile string
 
 func createConfig(cfgPath string) error {
 	if cfgPath != "" {
 		viper.SetConfigFile(cfgPath)
 	} else {
-		configDir, err := os.UserConfigDir()
-		if err != nil {
-			return err
-		}
-		viper.AddConfigPath(filepath.Join(configDir, "hack-ai"))
 		viper.SetConfigName("config")
 		viper.SetConfigType("toml")
+
+		configDir, err := os.UserConfigDir()
+		if err != nil {
+			if home, hErr := os.UserHomeDir(); hErr == nil {
+				configDir = filepath.Join(home, ".config")
+			} else {
+				configDir = "."
+			}
+		}
+		viper.AddConfigPath(filepath.Join(configDir, "hack"))
+
+		viper.AddConfigPath("/etc/hack")
 	}
 
 	if err := viper.ReadInConfig(); err != nil {
@@ -51,17 +42,25 @@ func createConfig(cfgPath string) error {
 	return nil
 }
 
-func determineMode() (string, error) {
-	if commandMode && codeMode {
-		return "", fmt.Errorf("cannot use command mode and code mode simultaneously")
-	}
 
-	switch {
-	case commandMode:
-		return "command", nil
-	case codeMode:
-		return "code", nil
-	default:
-		return "normal", nil
+func init() {
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "",
+		"config file path, $HOME/.config/hack-ai/config.toml if not provided")
+
+	rootCmd.Flags().StringVarP(&prompt, "prompt", "p", "", "prompt for the LLM")
+	rootCmd.Flags().StringP("key", "k", "", "API key for selected provider")
+	rootCmd.Flags().StringP("key-file", "", "", "Path to file containing API key")
+	rootCmd.Flags().StringP("model", "m", "", "LLM used for response")
+	rootCmd.Flags().StringP("base", "b", "", "base URL for the API (without /chat/completions)")
+	rootCmd.Flags().BoolVarP(&commandMode, "shell", "s", false, "enable command mode")
+	rootCmd.Flags().BoolVarP(&codeMode, "write", "w", false, "enable code mode")
+
+	viper.BindPFlag("api_key", rootCmd.Flags().Lookup("key"))
+	viper.BindPFlag("api_key_path", rootCmd.Flags().Lookup("key-file"))
+	viper.BindPFlag("model", rootCmd.Flags().Lookup("model"))
+	viper.BindPFlag("base_url", rootCmd.Flags().Lookup("base"))
+
+	rootCmd.PersistentPreRunE = func(cmd *cobra.Command, args []string) error {
+		return createConfig(cfgFile)
 	}
 }

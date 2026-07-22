@@ -3,7 +3,6 @@ self:
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.programs.hack;
   inherit (pkgs.stdenv.hostPlatform) system;
 in
 {
