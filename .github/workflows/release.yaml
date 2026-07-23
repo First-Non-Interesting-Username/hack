@@ -72,7 +72,7 @@ jobs:
             automated
 
       - name: Enable pull request auto-merge
-        uses: peter-evans/enable-pull-request-automerge@4a6118304b437af8fe5f3e6e1ee64f9d8b3c12a6 # v3
+        uses: peter-evans/enable-pull-request-automerge@a660677d5469627102a1c1e11409dd063606628d # v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{ steps.create-pr.outputs.pull-request-number }}
