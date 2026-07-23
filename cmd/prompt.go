@@ -9,16 +9,16 @@ import (
 )
 
 func generatePrompt() (string, error) {
-	stdin, err := readPrompt()
+	stdin, err := readStdin()
 	if err != nil {
 		return "", err
 	}
 	switch {
 	case prompt == "" && stdin == "":
 		return "", fmt.Errorf("no prompt provided (use --prompt or stdin)")
-	case prompt != "":
+	case prompt != "" && stdin == "":
 		return prompt, nil
-	case stdin != "":
+	case stdin != "" && prompt == "":
 		return stdin, nil
 	}
 
@@ -26,10 +26,13 @@ func generatePrompt() (string, error) {
 	return promptText, nil
 }
 
-func readPrompt() (string, error) {
+func readStdin() (string, error) {
 	isTerminal := term.IsTerminal(int(os.Stdin.Fd()))
 
 	if isTerminal {
+		if prompt != "" {
+			return "", nil
+		}
 		fmt.Fprintln(os.Stderr, "Enter your prompt. Press Ctrl+D when done.")
 	}
 
