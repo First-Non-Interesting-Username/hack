@@ -55,6 +55,7 @@ jobs:
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
+        id: create-pr
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore(nix): update hack package and flake.lock"
@@ -69,3 +70,10 @@ jobs:
           labels: |
             dependencies
             automated
+
+      - name: Enable pull request auto-merge
+        uses: peter-evans/enable-pull-request-automerge@4a6118304b437af8fe5f3e6e1ee64f9d8b3c12a6 # v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.create-pr.outputs.pull-request-number }}
+          merge-method: squash
