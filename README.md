@@ -6,6 +6,14 @@ It is intended for Hackclub AI API, but there's nothing stopping you from using 
 
 ![Hackatime Badge](https://hackatime.hackclub.com/api/v1/badge/U0A9Y38B28H/First-Non-Interesting-Username/hack-ai-cli)
 
+The tech stack consists of 5 pieces:
+
+- [Go](https://go.dev/), the underlying language behind the project
+- [Cobra](https://github.com/spf13/cobra), Go library for creating CLI tools
+- [Go-OpenAI](https://github.com/sashabaranov/go-openai), Go library for making requests to OpenAI compatible APIs
+- [Nix](https://nixos.org/), language providing reproductible builds and software distribution
+- [Devenv](https://devenv.sh/), nix based dev environment solution
+
 ## Installation and usage
 
 ### Installation
@@ -50,6 +58,17 @@ programs.hack = {
     model = "deepseek/deepseek-v4-pro";
     api_key_path = ${config.sops.secrets.HACK_CLUB_AI_API_KEY.path};
   };
+};
+```
+
+If you want to, there's a cachix cache available:
+
+```nix
+nix.settings = {
+  extra-substituters = ["https://dirtree-db.cachix.org"];
+  extra-trusted-public-keys = [
+    "dirtree-db.cachix.org-1:geR/eeJBzFUNhj3mwjHm1EK/mzXIG/PF3Bg48YlF1ys="
+  ];
 };
 ```
 
@@ -111,3 +130,5 @@ Flags:
 ## Roadmap
 
 - Exa integration
+- Upstream package
+- Tests
