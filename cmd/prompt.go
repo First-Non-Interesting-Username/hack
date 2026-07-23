@@ -67,7 +67,7 @@ func generateSystemPrompt() (string, error) {
 		input for that program.
 
 		If the user does NOT specify a target, assume your output will be piped into
-		"bash -c", and emit a single shell command (or a valid sequence of shell
+		"bash", and emit a single shell command (or a valid sequence of shell
 		commands) that accomplishes the request. Assume a POSIX-compliant shell by
 		default. If the user is using a non-POSIX shell (such as Nushell, fish, or
 		PowerShell), they will tell you which one; in that case, produce output valid
