@@ -21,10 +21,10 @@ plain responses.
 Usage:
 	hack -p "your prompt here"
 	echo "some content" | hack -p "summarize this"
-	ls -la | hack -xp "delete the largest file"
+	ls -la | hack -sp "delete the largest file"
 
 Modes:
-	shell   (-x/--execute)  Generate shell commands from a prompt
+	shell   (-s/--shell)    Generate shell commands from a prompt
 	code    (-w/--write)    Output executable code (jq, python3, bash, or POSIX sh)
 	normal                  Standard prompt-and-response
 	`,

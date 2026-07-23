@@ -82,10 +82,10 @@ plain responses.
 Usage:
         hack -p "your prompt here"
         echo "some content" | hack -p "summarize this"
-        ls -la | hack -xp "delete the largest file"
+        ls -la | hack -sp "delete the largest file"
 
 Modes:
-        shell   (-x/--execute)  Generate shell commands from a prompt
+        shell   (-s/--shell)    Generate shell commands from a prompt
         code    (-w/--write)    Output executable code (jq, python3, bash, or POSIX sh)
         normal                  Standard prompt-and-response
 
@@ -97,7 +97,7 @@ Flags:
   -c, --config string     config file path, $HOME/.config/hack-ai/config.toml if not provided
   -h, --help              help for hack
   -k, --key string        API key for selected provider
-  -f  --key-file string   Path to file containing API key
+  -f, --key-file string   Path to file containing API key
   -m, --model string      LLM used for response
   -p, --prompt string     prompt for the LLM
   -s, --shell             enable command mode
