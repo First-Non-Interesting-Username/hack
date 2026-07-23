@@ -45,7 +45,10 @@ inputs.hack.homeManagerModules.default
 programs.hack = {
   enable = true;
   settings = {
-    # Equivalent to the config file
+    # Example values
+    base_url = "https://ai.hackclub.com/proxy/v1";
+    model = "deepseek/deepseek-v4-pro";
+    api_key_path = ${config.sops.secrets.HACK_CLUB_AI_API_KEY.path};
   };
 };
 ```

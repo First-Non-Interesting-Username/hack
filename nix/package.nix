@@ -6,17 +6,17 @@
 }:
 buildGoModule (finalAttrs: {
   pname = "hack";
-  version = "0-unstable-2026-07-22";
+  version = "0-unstable-2026-07-23";
   structuredAttrs = true;
 
   src = fetchFromGitHub {
     owner = "First-Non-Interesting-Username";
     repo = "hack";
-    rev = "611ce15e057fa248c05524d79196d5d059c7fa17";
-    hash = "sha256-vsa/iu/Qg079KtQ9N9yX5jKJrArpf0DlqlxUqtmHogg=";
+    rev = "8710c4e75b05a312e75995ea550e84b7fb7625d4";
+    hash = "sha256-v9ZM2qtcfFsB5fQkYkaOcBmzb4aqKzV8N/yvgtYs5hY=";
   };
 
-  vendorHash = "sha256-lo1Dz5isHCfX+mQ0zoF0jCXwnT7WXBfzwgC9UJBvtQg=";
+  vendorHash = "sha256-qomzX5XGDe0XeD45styCwjS/2tGVeNpS7sqpKtxHnHk=";
 
   ldflags = ["-s"];
 

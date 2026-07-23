@@ -1,0 +1,73 @@
+name: Create release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        type: string
+        description: 'Version tag to be realeased. This project uses zenver'
+
+jobs:
+  release:
+    name: Create release
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: true
+
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+        with:
+          name: matrix
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          installCommand: "nix profile add nixpkgs#cachix"
+
+      - name: Update flake.lock
+        run: nix flake update
+
+      - name: Update package
+        run: nix run nixpkgs#nix-update -- --flake --version=branch hack
+
+      - name: Build package
+        run: nix build .#hack
+
+      - name: Create release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            result/bin/hack
+          generate_release_notes: true
+          tag_name: "${{ inputs.version }}"
+
+      - name: Bump version in root.go
+        run: |
+          sed -i 's/Version: "[0-9]*"/Version: "${{ inputs.version }}"/' cmd/root.go
+
+      - name: Update package again
+        run: nix run nixpkgs#nix-update -- --flake --version=branch hack
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
+        with:
+          automerge: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(nix): update hack package and flake.lock"
+          branch: update-nix-package
+          base: main
+          delete-branch: true
+          title: "chore(nix): update hack package"
+          body: |
+            Automated update triggered by the [release workflow run #${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).
+
+            This bumps `default.nix` (via `nix-update`) and refreshes `flake.lock`.
+          labels: |
+            dependencies
+            automated

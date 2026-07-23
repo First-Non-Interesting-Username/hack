@@ -9,12 +9,13 @@ devenv shell
 ```
 
 You can also just install Go.
-
+<!--
 ## Running tests
 
 ```bash
 
 ```
+-->
 
 ## Submitting changes
 
