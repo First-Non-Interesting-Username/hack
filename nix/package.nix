@@ -12,8 +12,8 @@ buildGoModule (finalAttrs: {
   src = fetchFromGitHub {
     owner = "First-Non-Interesting-Username";
     repo = "hack";
-    rev = "8710c4e75b05a312e75995ea550e84b7fb7625d4";
-    hash = "sha256-v9ZM2qtcfFsB5fQkYkaOcBmzb4aqKzV8N/yvgtYs5hY=";
+    rev = "2b88c96c9052495cec023da58c9d2f6349c2961b";
+    hash = "sha256-sB6gwYUPMujG4KdrqWvhiphUD+ztKxeMz/J2nN/eOdg=";
   };
 
   vendorHash = "sha256-qomzX5XGDe0XeD45styCwjS/2tGVeNpS7sqpKtxHnHk=";
