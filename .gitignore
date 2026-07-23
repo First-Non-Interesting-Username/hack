@@ -48,3 +48,6 @@ result
 
 # Resulting binary
 hack
+
+# Config used for testing
+config.toml

@@ -4,7 +4,7 @@ Dead-simple, UNIX style tool for interacting with LLMs on command line.
 
 It is intended for Hackclub AI API, but there's nothing stopping you from using it with any other Open AI completions compatible API.
 
-![Hackatime Badge](https://hackatime-badge.hackclub.com/@janekmusin/hack-ai-cli)
+![Hackatime Badge](https://hackatime.hackclub.com/api/v1/badge/U0A9Y38B28H/First-Non-Interesting-Username/hack-ai-cli)
 
 ## Installation and usage
 

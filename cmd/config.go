@@ -11,10 +11,10 @@ import (
 )
 
 var (
-	cfgFile string
-	prompt string
+	cfgFile     string
+	prompt      string
 	commandMode bool
-	codeMode bool
+	codeMode    bool
 )
 
 func createConfig(cfgPath string) error {
@@ -69,15 +69,15 @@ func init() {
 	}
 }
 
-func determineMode() (string, error) {
-	if commandMode && codeMode {
+func determineMode(command, code bool) (string, error) {
+	if command && code {
 		return "", fmt.Errorf("cannot use command mode and code mode simultaneously")
 	}
 
 	switch {
-	case commandMode:
+	case command:
 		return "command", nil
-	case codeMode:
+	case code:
 		return "code", nil
 	default:
 		return "normal", nil

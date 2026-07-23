@@ -41,7 +41,7 @@ func readPrompt() (string, error) {
 }
 
 func generateSystemPrompt() (string, error) {
-	mode, err := determineMode()
+	mode, err := determineMode(commandMode, codeMode)
 	if err != nil {
 		return "", err
 	}
