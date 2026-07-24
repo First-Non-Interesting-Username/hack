@@ -56,7 +56,7 @@ programs.hack = {
     # Example values
     base_url = "https://ai.hackclub.com/proxy/v1";
     model = "deepseek/deepseek-v4-pro";
-    api_key_path = ${config.sops.secrets.HACK_CLUB_AI_API_KEY.path};
+    api_key_path = config.sops.secrets.HACK_CLUB_AI_API_KEY.path";
   };
 };
 ```
@@ -95,13 +95,14 @@ api_key_path = "/run/secrets/HACKCLUB_AI_API_KEY"
 ```bash
 hack --help
 
-hack is a command-line tool for AI-assisted development.
+Interact with LLMs from the command line
 
-It sends prompts to OpenAI-compatible LLM APIs and returns output tailored
-to the task at hand: shell commands, executable code, documentation, or
-plain responses.
+hack is a simple tool for interacting with LLMs.
+It is made to be scriptable, extensible and easy to use.
+There're no agentic capabilites built in,
+but because of how it works, it's possible to create an agent based on it.
 
-Usage:
+Example usage:
         hack -p "your prompt here"
         echo "some content" | hack -p "summarize this"
         ls -la | hack -sp "delete the largest file"

@@ -6,14 +6,14 @@
 }:
 buildGoModule (finalAttrs: {
   pname = "hack";
-  version = "0-unstable-2026-07-23";
+  version = "1-unstable-2026-07-23";
   structuredAttrs = true;
 
   src = fetchFromGitHub {
     owner = "First-Non-Interesting-Username";
     repo = "hack";
-    rev = "2b88c96c9052495cec023da58c9d2f6349c2961b";
-    hash = "sha256-sB6gwYUPMujG4KdrqWvhiphUD+ztKxeMz/J2nN/eOdg=";
+    rev = "a61328b58b06ebb3a32427adec65c5829477f376";
+    hash = "sha256-aYgukxqLaULmbNRpq2Men5oFQXP4gAv1yrtKbpSeJoM=";
   };
 
   vendorHash = "sha256-qomzX5XGDe0XeD45styCwjS/2tGVeNpS7sqpKtxHnHk=";
