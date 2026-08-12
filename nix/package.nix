@@ -20,7 +20,9 @@ buildGoModule (finalAttrs: {
 
   ldflags = ["-s"];
 
-  passthru.updateScript = nix-update-script {};
+  passthru.updateScript = nix-update-script {
+    extraArgs = ["--version=branch"];
+  };
 
   meta = {
     description = "CLI tool for interacting with LLMs";
