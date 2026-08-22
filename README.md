@@ -29,6 +29,8 @@ go build
 
 Alternatively, get the binary for your system from [github releases](https://github.com/First-Non-Interesting-Username/hack/releases)
 
+In both cases, put the binary somewhere on your path and create the config in your preffered location.
+
 There's also a Nix package available. Add:
 
 ```nix
