@@ -13,4 +13,4 @@ labels: feature-request
 
 <!-- Explain why this feature would be a great addition to the project -->
 
-[ ] I am willing to submit the PR myself
+- [ ] I am willing to submit the PR myself
