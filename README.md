@@ -38,7 +38,9 @@ to your flake inputs.
 Then you could either that package to your package list (either home manager or system):
 
 ```nix
-inputs.hack.packages.${pkgs.stdenv.hostPlatform.system}.hack
+home.packages = [
+  inputs.hack.packages.${pkgs.stdenv.hostPlatform.system}.hack
+];
 ```
 
 or use the module:
@@ -99,7 +101,7 @@ Interact with LLMs from the command line
 
 hack is a simple tool for interacting with LLMs.
 It is made to be scriptable, extensible and easy to use.
-There're no agentic capabilites built in,
+There're no agentic capabilities built in,
 but because of how it works, it's possible to create an agent based on it.
 
 Example usage:
