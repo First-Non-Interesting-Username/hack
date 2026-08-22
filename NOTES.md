@@ -9,4 +9,9 @@ This is a place for taking notes about the project, todos and everything else.
 - Exa/ddg integration
 - Tests
 - Packaging in the upstream (nixpkgs)
-- Rewriting in Rust <!-- Yes, actually, this is a project I know and I want to try rust at some point -->
+- Rewriting in Rust
+
+<!-- Yes, actually, this is a project I know and I want to try rust at some point -->
+
+- Windows release
+- MacOS/aarch64 linux binary building

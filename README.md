@@ -14,6 +14,8 @@ The tech stack consists of 5 pieces:
 - [Nix](https://nixos.org/), language providing reproductible builds and software distribution
 - [Devenv](https://devenv.sh/), nix based dev environment solution
 
+Notes and roadmap are available in [NOTES.md](/NOTES.md)
+
 ## Installation and usage
 
 ### Installation
