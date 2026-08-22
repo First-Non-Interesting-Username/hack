@@ -129,9 +129,3 @@ Flags:
   -v, --version           version for hack
   -w, --write             enable code mode
 ```
-
-## Roadmap
-
-- Exa integration
-- Upstream package
-- Tests
