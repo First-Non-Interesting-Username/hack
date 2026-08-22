@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-only
 self: {
   config,
   lib,
@@ -5,7 +8,7 @@ self: {
   ...
 }: let
   cfg = config.programs.hack;
-  tomlFormat = pkgs.formats.toml { };
+  tomlFormat = pkgs.formats.toml {};
 in {
   imports = [(import ./module.nix self)];
 

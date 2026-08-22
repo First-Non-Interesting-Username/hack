@@ -1,12 +1,16 @@
+// SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+//
+// SPDX-License-Identifier: GPL-3.0-only
 package cmd
 
 import (
 	"bytes"
 	"context"
 	"fmt"
+	"os"
+
 	"github.com/sashabaranov/go-openai"
 	"github.com/spf13/viper"
-	"os"
 )
 
 func makeRequest() (string, error) {

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 First-Non-Interesting-Username
+#
+# SPDX-License-Identifier: GPL-3.0-only
 self: {
   config,
   lib,
@@ -5,7 +8,7 @@ self: {
   ...
 }: let
   inherit (pkgs.stdenv.hostPlatform) system;
-  tomlFormat = pkgs.formats.toml { };
+  tomlFormat = pkgs.formats.toml {};
 in {
   options.programs.hack = {
     enable = lib.mkEnableOption "hack, CLI tool for interacting with LLMs";
