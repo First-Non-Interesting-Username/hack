@@ -7,4 +7,6 @@
     gofmt.enable = true;
     govet.enable = true;
   };
+
+  devcontainer.enable = true;
 }
