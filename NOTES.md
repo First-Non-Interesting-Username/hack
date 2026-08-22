@@ -4,7 +4,7 @@ This is a place for taking notes about the project, todos and everything else.
 
 ## Actual notes
 
-## Todo
+## Roadmap
 
 - Exa/ddg integration
 - Tests

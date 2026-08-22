@@ -94,6 +94,8 @@ api_key = "sk-xxx"
 api_key_path = "/run/secrets/HACKCLUB_AI_API_KEY"
 ```
 
+Example config is available as [config.toml.example](config.toml.example) in the root of this repo
+
 ### Usage
 
 ```bash
