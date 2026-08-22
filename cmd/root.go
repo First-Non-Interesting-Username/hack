@@ -30,13 +30,6 @@ Modes:
 	code    (-w/--write)    Output executable code (jq, python3, bash, or POSIX sh)
 	normal                  Standard prompt-and-response
 	`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		cfgPath, _ := cmd.Flags().GetString("config")
-		if err := createConfig(cfgPath); err != nil {
-			return err
-		}
-		return nil
-	},
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := runHack()
 		if err != nil {

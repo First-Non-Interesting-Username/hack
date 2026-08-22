@@ -1,4 +1,4 @@
-# This was my real key I used for testing, I revoked it
+# This was my real key that I used for testing, I revoked it
 api_key = "sk-hc-v1-18a1c458526e474b861cc1df2afc31078c40552db98044c3aee8995a1854467f"
 base_url = "https://ai.hackclub.com/proxy/v1"
 model = "deepseek/deepseek-v4-flash-vision-exp"
