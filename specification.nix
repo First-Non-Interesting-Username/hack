@@ -1,3 +1,4 @@
+# I wrote this file to get an idea how should the program look like
 {
   pkgs,
   config,
