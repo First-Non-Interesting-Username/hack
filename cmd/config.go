@@ -49,7 +49,7 @@ func createConfig(cfgPath string) error {
 
 func init() {
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "",
-		"config file path, $HOME/.config/hack-ai/config.toml if not provided")
+		"config file path, $HOME/.config/hack/config.toml if not provided")
 
 	rootCmd.Flags().StringVarP(&prompt, "prompt", "p", "", "prompt for the LLM")
 	rootCmd.Flags().StringP("key", "k", "", "API key for selected provider")

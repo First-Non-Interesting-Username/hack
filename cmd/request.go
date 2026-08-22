@@ -2,11 +2,11 @@ package cmd
 
 import (
 	"bytes"
+	"context"
 	"fmt"
+	"github.com/sashabaranov/go-openai"
 	"github.com/spf13/viper"
 	"os"
-	"github.com/sashabaranov/go-openai"
-	"context"
 )
 
 func makeRequest() (string, error) {
@@ -29,27 +29,26 @@ func makeRequest() (string, error) {
 		apiKey = string(bytes.TrimSpace(data))
 	}
 
-
 	config := openai.DefaultConfig(apiKey)
 	config.BaseURL = viper.GetString("base_url")
 	client := openai.NewClientWithConfig(config)
 
 	resp, err := client.CreateChatCompletion(
-        context.Background(),
-        openai.ChatCompletionRequest{
-            Model: viper.GetString("model"),
-            Messages: []openai.ChatCompletionMessage{
-            	{
-                	Role:    openai.ChatMessageRoleSystem,
-                 	Content: systemPrompt,
-             	},
-                {
-                    Role:    openai.ChatMessageRoleUser,
-                    Content: prompt,
-                },
-            },
-        },
-    )
+		context.Background(),
+		openai.ChatCompletionRequest{
+			Model: viper.GetString("model"),
+			Messages: []openai.ChatCompletionMessage{
+				{
+					Role:    openai.ChatMessageRoleSystem,
+					Content: systemPrompt,
+				},
+				{
+					Role:    openai.ChatMessageRoleUser,
+					Content: prompt,
+				},
+			},
+		},
+	)
 
 	if err != nil {
 		return "", err
