@@ -5,5 +5,7 @@
     "config:recommended",
     "helpers:pinGitHubActionDigests"
   ],
-  "timezone": "Europe/Warsaw"
+  "timezone": "Europe/Warsaw",
+  "automerge": true,
+  "automergeType": "pr"
 }
