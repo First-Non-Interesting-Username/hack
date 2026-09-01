@@ -32,11 +32,28 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           installCommand: "nix profile add nixpkgs#cachix"
 
+      - name: Create tag
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git tag -a "${{ inputs.version }}" -m "Release ${{ inputs.version }}"
+          git push origin "${{ inputs.version }}"
+
       - name: Update flake.lock
         run: nix flake update
 
       - name: Update package
-        run: nix run nixpkgs#nix-update -- --flake --use-update-script hack
+        run: |
+          nix run nixpkgs#nix-update -- \
+            --flake --version "${{ inputs.version }}" hack
+
+      - name: Verify the package actually moved
+        run: |
+          git --no-pager diff -- nix/package.nix
+          git diff --quiet -- nix/package.nix && {
+            echo "::error::nix-update did not touch nix/package.nix meaning the package is stalled"
+            exit 1
+          }
 
       - name: Build package
         run: nix build .#hack
@@ -60,9 +77,6 @@ jobs:
         run: |
           sed -i 's/Version: "[0-9]*"/Version: "${{ inputs.version }}"/' cmd/root.go
 
-      - name: Update package again
-        run: nix run nixpkgs#nix-update -- --flake --use-update-script hack
-
       - name: Create pull request
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         id: create-pr
@@ -76,7 +90,7 @@ jobs:
           body: |
             Automated update triggered by the [release workflow run #${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).
 
-            This bumps `default.nix` (via `nix-update`) and refreshes `flake.lock`.
+            This bumps `nix/package.nix` (via `nix-update`) and refreshes `flake.lock`.
           labels: |
             dependencies
             automated
