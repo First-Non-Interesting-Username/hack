@@ -80,7 +80,7 @@ nix.settings = {
 
 ### Configuration
 
-Create a file named `config.toml` either in `$XDG_CONFIG_HOME/hack` or `/etc/hack`.
+Create a file named `config.toml` either in `$HOME/.config/hack` or `/etc/hack`.
 The user dir takes precedence over system dir.
 
 File contents (example values):
