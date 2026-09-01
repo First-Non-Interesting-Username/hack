@@ -48,6 +48,13 @@ jobs:
             result/bin/hack
           generate_release_notes: true
           tag_name: "${{ inputs.version }}"
+          body: |
+            Built for Linux x86-64 (amd64). Download `hack`, then:
+
+            ```bash
+            chmod +x ./hack
+            ./hack
+            ```
 
       - name: Bump version in root.go
         run: |
