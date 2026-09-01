@@ -9,7 +9,7 @@
 }:
 buildGoModule (finalAttrs: {
   pname = "hack";
-  version = "1-unstable-2026-07-23";
+  version = "2";
   structuredAttrs = true;
 
   src = fetchFromGitHub {
@@ -23,7 +23,9 @@ buildGoModule (finalAttrs: {
 
   ldflags = ["-s"];
 
-  passthru.updateScript = nix-update-script {};
+  passthru.updateScript = nix-update-script {
+    extraArgs = [ "--flake" ];
+  };
 
   meta = {
     description = "CLI tool for interacting with LLMs";
