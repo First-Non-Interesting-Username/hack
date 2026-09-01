@@ -12,7 +12,7 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Version: "4",
+	Version: "5",
 	Use:     "hack",
 	Short:   "CLI tool for interacting with LLMs",
 	Long: `
