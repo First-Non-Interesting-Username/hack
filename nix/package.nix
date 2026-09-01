@@ -23,6 +23,10 @@ buildGoModule (finalAttrs: {
 
   ldflags = ["-s"];
 
+  env = {
+     CGO_ENABLED = 0;
+  };
+
   passthru.updateScript = nix-update-script {
     extraArgs = [ "--flake" ];
   };
