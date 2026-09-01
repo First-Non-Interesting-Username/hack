@@ -33,11 +33,7 @@ jobs:
           installCommand: "nix profile add nixpkgs#cachix"
 
       - name: Create tag
-        run: |
-          git config user.name  'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git tag -a "${{ inputs.version }}" -m "Release ${{ inputs.version }}"
-          git push origin "${{ inputs.version }}"
+        run: git push origin "HEAD:refs/tags/${{ inputs.version }}"
 
       - name: Update flake.lock
         run: nix flake update
@@ -50,10 +46,10 @@ jobs:
       - name: Verify the package actually moved
         run: |
           git --no-pager diff -- nix/package.nix
-          git diff --quiet -- nix/package.nix && {
+          if git diff --quiet -- nix/package.nix; then
             echo "::error::nix-update did not touch nix/package.nix meaning the package is stalled"
             exit 1
-          }
+          fi
 
       - name: Build package
         run: nix build .#hack
